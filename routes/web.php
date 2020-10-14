@@ -14,9 +14,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('login');
 });
 
 Route::get('/home', function () {
     return view('home');
 })->middleware(['auth']);
+
+//Client Routes
+use App\Http\Controllers\ClientController;
+Route::get('/client-register', [ClientController::class, 'register'])->middleware(['auth']);
+Route::post('/client-register', [ClientController::class, 'registerAjax'])->middleware(['auth'])->name('register-client');
+Route::get('/client-list', [ClientController::class, 'list'])->middleware(['auth']);

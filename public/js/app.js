@@ -37274,6 +37274,8 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+__webpack_require__(/*! ./custom */ "./resources/js/custom.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -37321,6 +37323,55 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/js/custom.js":
+/*!********************************!*\
+  !*** ./resources/js/custom.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(document).ready(function () {
+  $('.customform').submit(function (event) {
+    event.preventDefault();
+    $('.invalid-feedback').text('');
+    $('.form-message').text('');
+    $('.is-invalid').removeClass('is-invalid');
+    var form = $(this);
+    var data = {};
+    $.each(form.serializeArray(), function (i, v) {
+      data[v.name] = v.value;
+    });
+    $.ajax({
+      url: form.attr('action'),
+      type: form.attr('method'),
+      data: data,
+      success: function success(response) {
+        if (response) {
+          $('.form-message').text(response.message);
+
+          if (response.success) {
+            form[0].reset();
+          }
+        }
+      },
+      error: function error(data) {
+        var response = $.parseJSON(data.responseText);
+
+        if (response.errors) {
+          $.each(response.errors, function (key, value) {
+            $('#' + key).addClass('is-invalid').next().html("<strong>" + value.join("<br />") + "</strong>");
+          });
+          $('.form-message').text(response.message);
+        } else {
+          $('.form-message').text('Error');
+        }
+      }
+    });
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -37339,8 +37390,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Kevelt\testUI\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Kevelt\testUI\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Kevelt\pruebav2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Kevelt\pruebav2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
