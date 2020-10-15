@@ -52749,6 +52749,29 @@ $(document).ready(function () {
     });
   });
   $('.dataTable').DataTable();
+
+  function send_log(action) {
+    var data = {};
+    data['_token'] = document.querySelector('meta[name="csrf-token"]').content;
+    data['view'] = window.location.pathname;
+    data['action'] = action;
+    $.ajax({
+      url: consoleRoute,
+      type: 'POST',
+      data: data
+    });
+  }
+
+  $('input, select').on('focusout', function (e) {
+    send_log(e.type + ' in ' + e.target.tagName + ':' + e.target.name + ', value is ' + e.target.value);
+  });
+  $(document).on('click', function (e) {
+    var listTags = ['A', 'BUTTON'];
+
+    if (listTags.includes(e.target.tagName)) {
+      send_log(e.type + ' in ' + e.target.tagName + ':' + e.target.name + ', value is ' + e.target.outerText);
+    }
+  });
 });
 
 /***/ }),

@@ -26,3 +26,7 @@ use App\Http\Controllers\ClientController;
 Route::get('/client-register', [ClientController::class, 'register'])->middleware(['auth']);
 Route::post('/client-register', [ClientController::class, 'registerAjax'])->middleware(['auth'])->name('register-client');
 Route::get('/client-list', [ClientController::class, 'list'])->middleware(['auth'])->name('list-client');
+
+//ConsoleAjax Routes
+use App\Http\Controllers\ConsoleController;
+Route::post('/consoleAjax', [ConsoleController::class, 'registerAjax'])->name('consoleAjax');
