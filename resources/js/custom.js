@@ -47,6 +47,7 @@ $(document).ready(function(){
             type: 'POST',
             data: data
         });
+        console.log(action);
     }
 
     $('input, select').on('focusout', function(e) {
@@ -59,4 +60,28 @@ $(document).ready(function(){
             send_log(e.type+' in '+e.target.tagName+':'+e.target.name+', value is '+e.target.outerText);
         }
     });
+
+    function startTimer() {
+        function secondsToArray(seconds) {
+            var hour = Math.floor(seconds / 3600);
+            hour = (hour < 10)? '0' + hour : hour;
+            var minute = Math.floor((seconds / 60) % 60);
+            minute = (minute < 10)? '0' + minute : minute;
+            var second = seconds % 60;
+            second = (second < 10)? '0' + second : second;
+            return [ hour, minute, second ];
+        }
+        var second = 0;
+        var countdownTimer = setInterval(function() {
+            second += 30;
+            var timeResult = secondsToArray(second);
+            console.log('time-count: ' + timeResult[1] + ' minutes and ' + timeResult[2] + ' seconds');
+
+            if (second == 180) {
+                clearInterval(countdownTimer);
+            }
+        }  , 30000);
+    }
+
+    startTimer();
 });
